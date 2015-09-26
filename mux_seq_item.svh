@@ -13,7 +13,7 @@ class mux_seq_item extends uvm_sequence_item;
   function new (string name = "mux_seq_item");
     super.new(name);
   endfunction
-  
+  //Random constraint.. 
   constraint c_input1 {
     input1 < 10;
   }

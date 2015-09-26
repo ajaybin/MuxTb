@@ -5,6 +5,7 @@
 `include "testbench_pkg.svh"
 
 module top ();
+  import uvm_pkg::*;
   mux m0 ();
   logic Clk;
   initial begin
