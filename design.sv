@@ -6,6 +6,8 @@ input [31:0] B,
 input Sel,
 input Clk,
 input Reset,
+input in_val,
+output out_val,
 output [31:0] Out
   );
   reg [31:0] A_d0;
