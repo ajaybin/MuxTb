@@ -4,7 +4,7 @@ class mux_env extends uvm_env;
   `uvm_component_utils(mux_env)
   
   mux_agent agent;
-  mux_sb = sb;
+  mux_sb sb;
   
   function new(string name = "mux_env",uvm_component parent);
     super.new(name,parent);

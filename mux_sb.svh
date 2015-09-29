@@ -3,7 +3,7 @@
 class mux_sb extends uvm_scoreboard;
   
   `uvm_component_utils_begin(mux_sb)
-    `uvm_config_int(enable,UVM_ALL_ON)
+    `uvm_field_int(enable,UVM_ALL_ON)
   `uvm_component_utils_end
   
   `uvm_analysis_imp_decl( _input )
@@ -42,16 +42,16 @@ class mux_sb extends uvm_scoreboard;
     if (enable && reset == RESET_INACTIVE) begin
 	  mux_seq_item entry = sb_q.pop_front();
 	  if (out !== selector(entry)) begin
-	    `uvm_error("CHECK_OUTPUT",$sformatf("Incorrect Output.\n%s",entry.sprint())
+	    `uvm_error("CHECK_OUTPUT",$sformatf("Incorrect Output.\n%s",entry.sprint()))
 	  end
 	end
   endfunction
 
   function void write_reset(reset_state_e rst);
     if (enable) begin
-      reset_state_e = rst;
-	end
-  end
+      reset = rst;
+	   end
+  endfunction
   
   function bit [31:0] selector (mux_seq_item entry);
     if (entry.select == 1'b0) begin

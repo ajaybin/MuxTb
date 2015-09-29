@@ -10,12 +10,13 @@ class mux_mon extends uvm_monitor;
   
   mux_seq_item mon_item;
   bit [31:0] output_data;
-  reset_state_e reset;
+  testbench_pkg::reset_state_e reset;
   
   function new(string name = "mux_mon", uvm_component parent);
     super.new(name,parent);
 	input_ap = new("input_ap",this);
 	output_ap = new("output_ap",this);
+ reset_ap = new("reset_ap",this);
 	output_data = 32'd0;
 	reset = RESET_INACTIVE;
   endfunction
@@ -34,11 +35,11 @@ class mux_mon extends uvm_monitor;
     fork : run_phase
       forever begin
 	    @(m_if.mux_cb);
-  	    item.input1 = m_if.mux_cb.A;
-	    item.input2 = m_if.mux_cb.B;
-	    item.select = m_if.mux_cb.Sel;
+  	    mon_item.input1 = m_if.mux_cb.A;
+	    mon_item.input2 = m_if.mux_cb.B;
+	    mon_item.select = m_if.mux_cb.Sel;
 		output_data = m_if.mux_cb.Out;
-		input_ap.write(item);
+		input_ap.write(mon_item);
 		output_ap.write(output_data);
       end
 	  
