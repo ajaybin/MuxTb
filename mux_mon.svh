@@ -27,24 +27,31 @@ class mux_mon extends uvm_monitor;
 	  `uvm_error("Build Phase","Could not find virtual interface mux_if")
 	end
 	
-	mon_item = mux_seq_item::type_id::create("mon_item");
 	
   endfunction
   
   task run_phase(uvm_phase phase);
+    super.run_phase(phase);
     fork : run_phase
       forever begin
 	    @(m_if.mux_cb);
+     if (m_if.mux_cb.in_val) begin
+	      mon_item = mux_seq_item::type_id::create("mon_item");
   	    mon_item.input1 = m_if.mux_cb.A;
-	    mon_item.input2 = m_if.mux_cb.B;
-	    mon_item.select = m_if.mux_cb.Sel;
-		output_data = m_if.mux_cb.Out;
-		input_ap.write(mon_item);
-		output_ap.write(output_data);
+	      mon_item.input2 = m_if.mux_cb.B;
+	      mon_item.select = m_if.mux_cb.Sel;
+
+		     input_ap.write(mon_item);
+     end
+     if (m_if.mux_cb.out_val) begin
+       output_data = m_if.mux_cb.Out;
+     		output_ap.write(output_data);
+     end
       end
 	  
 	  forever begin
-	    wait(m_if.Reset !== reset);
+	    @(m_if.Reset)
+     reset = m_if.Reset;
 		reset_ap.write(reset);
 	  end
 	  

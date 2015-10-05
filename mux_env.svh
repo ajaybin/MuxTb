@@ -18,9 +18,9 @@ class mux_env extends uvm_env;
   
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-	agent.monitor.input_ap.connect(sb.input_xp);
-	agent.monitor.output_ap.connect(sb.output_xp);
-	agent.monitor.reset_ap.connect(sb.reset_xp);
+  	agent.monitor.input_ap.connect(sb.input_xp);
+	  agent.monitor.output_ap.connect(sb.output_xp);
+	  agent.monitor.reset_ap.connect(sb.reset_xp);
   endfunction
   
 endclass

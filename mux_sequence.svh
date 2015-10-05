@@ -18,7 +18,7 @@ class mux_sequence extends uvm_sequence_base;
           return; 
         end
 
-        wait_clocks($urandom_range(10,2));        
+        wait_clocks($urandom_range(10,0));        
         if(!seq_item.randomize() with {input1 < 5;}) begin
           `uvm_error("mux_seq","Sequence item randomization failed")
         end          

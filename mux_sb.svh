@@ -42,7 +42,7 @@ class mux_sb extends uvm_scoreboard;
     if (enable && reset == RESET_INACTIVE) begin
 	  mux_seq_item entry = sb_q.pop_front();
 	  if (out !== selector(entry)) begin
-	    `uvm_error("CHECK_OUTPUT",$sformatf("Incorrect Output.\n%s",entry.sprint()))
+	    `uvm_error("CHECK_OUTPUT",$sformatf("Incorrect Output Out:%0x.\n%s",out,entry.sprint()))
 	  end
 	end
   endfunction
