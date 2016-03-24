@@ -2,6 +2,8 @@
 `define MUX_DRIVER_SVH
 class mux_driver extends uvm_driver#(mux_seq_item);
   `uvm_component_utils(mux_driver)
+
+  `uvm_register_cb(mux_driver, mux_callback_interface)
   
   virtual mux_if m_if;
   
@@ -32,6 +34,7 @@ class mux_driver extends uvm_driver#(mux_seq_item);
     
     forever begin
       seq_item_port.get_next_item(req);
+      `uvm_do_callbacks(mux_driver, mux_callback_interface, pre_send())
       m_if.A <= req.input1;
       m_if.B <= req.input2;
       m_if.Sel <= req.select;
@@ -39,6 +42,7 @@ class mux_driver extends uvm_driver#(mux_seq_item);
       @(m_if.mux_cb)
       m_if.in_val <= 1'b0;
       seq_item_port.item_done();
+      `uvm_do_callbacks(mux_driver, mux_callback_interface, post_send())
     end
   endtask
 endclass : mux_driver

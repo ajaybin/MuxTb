@@ -5,6 +5,7 @@ class mux_env extends uvm_env;
   
   mux_agent agent;
   mux_sb sb;
+  mux_callback mux_cb;
   
   function new(string name = "mux_env",uvm_component parent);
     super.new(name,parent);
@@ -13,7 +14,8 @@ class mux_env extends uvm_env;
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     agent = mux_agent::type_id::create("mux_agent",this);
-	sb = mux_sb::type_id::create("mux_sb",this);
+	   sb = mux_sb::type_id::create("mux_sb",this);
+    mux_cb = mux_callback::type_id::create("mux_cb",this);
   endfunction
   
   function void connect_phase(uvm_phase phase);
@@ -21,6 +23,7 @@ class mux_env extends uvm_env;
   	agent.monitor.input_ap.connect(sb.input_xp);
 	  agent.monitor.output_ap.connect(sb.output_xp);
 	  agent.monitor.reset_ap.connect(sb.reset_xp);
+   uvm_callbacks#(mux_driver)::add(null, mux_cb); 
   endfunction
   
 endclass
