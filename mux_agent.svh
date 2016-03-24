@@ -12,17 +12,17 @@ class mux_agent extends uvm_agent;
   
   function void build_phase (uvm_phase phase);
     super.build_phase(phase);
-	if(is_active == UVM_ACTIVE) begin
-      seqr = mux_seqr::type_id::create("mux_seqr",this);
-      driver = mux_driver::type_id::create("mux_driver",this);
-	end
-	monitor = mux_mon::type_id::create("mux_monitor",this);
+   	if(is_active == UVM_ACTIVE) begin
+         seqr = mux_seqr::type_id::create("mux_seqr",this);
+         driver = mux_driver::type_id::create("mux_driver",this);
+   	end
+   	monitor = mux_mon::type_id::create("mux_monitor",this);
   endfunction
   
   function void connect_phase (uvm_phase phase);
     if(is_active == UVM_ACTIVE) begin
       driver.seq_item_port.connect(seqr.seq_item_export);
-	end
+   	end
   endfunction
 endclass
 `endif

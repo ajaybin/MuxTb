@@ -19,8 +19,9 @@ class mux_test extends uvm_test;
     phase.raise_objection(this);
     seq = mux_sequence::type_id::create("mux_seq");
     seq.start(env.agent.seqr);
-	// Drop it here after the sequence is completed.
+	   // Drop it here after the sequence is completed.
     phase.drop_objection(this);
   endtask
+
 endclass
 `endif

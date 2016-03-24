@@ -6,11 +6,12 @@
 
 module top ();
   import uvm_pkg::*;
+  import testbench_pkg::*;
   mux m0 ();
   logic Clk;
   initial begin
-    $dumpfile("dump.vcd");
-    $dumpvars(0,top);
+    $fsdbDumpfile("verilog.fsdb");
+    $fsdbDumpvars(0,top);
   end
   
   initial begin

@@ -10,13 +10,13 @@ class mux_sequence extends uvm_sequence_base;
   endfunction
   
   task body();
-    super.body();
+    uvm_event_pool event_pool = uvm_event_pool::get_global_pool();
+    uvm_event end_stim_event = event_pool.get("end_stim_event");
     
+    super.body();
+    fork
       forever begin
         mux_seq_item seq_item = mux_seq_item::type_id::create("seq_item");          
-        if (p_sequencer.end_stimulus) begin
-          return; 
-        end
 
         wait_clocks($urandom_range(10,0));        
         if(!seq_item.randomize() with {input1 < 5;}) begin
@@ -26,6 +26,11 @@ class mux_sequence extends uvm_sequence_base;
         start_item(seq_item);
         finish_item(seq_item);
       end
+
+      begin
+        end_stim_event.wait_on();
+      end
+    join_any
   endtask : body
   
   task wait_clocks(int clocks);
